@@ -20,7 +20,7 @@ public class BankBookController {
 	//DB에 insert
 	@RequestMapping (value = "add", method = RequestMethod.POST)
 	public String add(BankBookDTO bankBookDTO)throws Exception{
-		int rsult = bankBookService.add(bankBookDTO);
+		int result = bankBookService.add(bankBookDTO);
 		
 		return "redirect:./list";
 	}
