@@ -15,7 +15,7 @@ public class NoticeDAOTest extends MyJunitTest {
 			@Autowired
 			private NoticeDAO noticeDAO;
 			
-	@Test
+	//@Test
 	public void check() {
 		assertNotNull(noticeDAO);
 	} 
@@ -27,7 +27,7 @@ public class NoticeDAOTest extends MyJunitTest {
 				assertNotEquals(0, ar.size());
 	}
 	//detail
-	@Test
+	//@Test
 	public void detailTest() throws Exception {
 		NoticeDTO noticeDTO = new NoticeDTO();
 		 noticeDTO.setNum(1);
@@ -35,7 +35,7 @@ public class NoticeDAOTest extends MyJunitTest {
 		assertNotNull(noticeDTO);
 	}
 	//add
-	@Test
+	//@Test
 	public void addTest() throws Exception {
 		NoticeDTO noticeDTO = new NoticeDTO();
 		noticeDTO.setTitle("t3");
@@ -48,7 +48,7 @@ public class NoticeDAOTest extends MyJunitTest {
 	}
 	
 	//delete
-	@Test
+	//@Test
 	public void deleteTest()throws Exception{
 		NoticeDTO noticeDTO = new NoticeDTO();
 		noticeDTO.setNum(1);
