@@ -9,7 +9,6 @@ public class NoticeDTO {
 	private String writer;
 	private Date regDate;
 	private Integer hit;
-	
 	public Integer getNum() {
 		return num;
 	}
@@ -46,6 +45,8 @@ public class NoticeDTO {
 	public void setHit(Integer hit) {
 		this.hit = hit;
 	}
+	
+	
 	
 	
 	

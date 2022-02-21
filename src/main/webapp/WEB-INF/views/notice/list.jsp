@@ -16,7 +16,7 @@
 		<c:forEach items="${list}" var="notice">
 		<tr>
 		<td>${notice.num}</td>
-		<td>${notice.title}</td>
+		<td><a href="./detail?num=${notice.num}">${notice.title}</a></td>
 		<td>${notice.contents}</td>
 		<td>${notice.writer}</td>
 		<td>${notice.regDate}</td>
@@ -24,5 +24,7 @@
 		</tr>
 		</c:forEach>
 		</table>
+		
+		<a href="./add">add</a>
 </body>
 </html>

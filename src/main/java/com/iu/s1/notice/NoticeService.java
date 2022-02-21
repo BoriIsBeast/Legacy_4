@@ -12,10 +12,12 @@ public class NoticeService {
 		//add
 		public int add(NoticeDTO noticeDTO)throws Exception{
 			return noticeDAO.add(noticeDTO);
+			}
+		
+		public int delete(NoticeDTO noticeDTO)throws Exception{
 			
+			return noticeDAO.delete(noticeDTO);
 		}
-		
-		
 		
 		
 		//list

@@ -9,13 +9,13 @@
 		SELECT * FROM NOTICE
 	</select>
 	
-	<select id="detail" resultType="com.iu.s1.notice.NoticeDTO" parameterType="com.iu.s1.notice.NoticeDTO">
-		select * from notice where num = #{num}
+	<select id="detail" parameterType="com.iu.s1.notice.NoticeDTO" resultType="com.iu.s1.notice.NoticeDTO" >
+		SELECT * FROM NOTICE WHERE NUM=#{num}
 	</select>
 	
 	<insert id="add" parameterType="com.iu.s1.notice.NoticeDTO">
-		 INSERT INTO notice (num,title,writer,contents,regdate,hit)
-    values (num_seq.nextval, #{title}, #{contents}, #{writer}, sysdate, #{hit})
+		 INSERT INTO NOTICE (NUM, TITLE, WRITER, CONTENTS,REGDATE,HIT)
+    values (num_seq.nextval, #{title}, #{contents}, #{writer}, sysDate, #{hit})
 	</insert>
 	
 	<delete id="delete" parameterType="com.iu.s1.notice.NoticeDTO">
