@@ -58,7 +58,7 @@ public class BankBookDAOTest extends MyJunitTest {
 	//@Test
 	public void deleteTest()throws Exception{
 		BankBookDTO bankBookDTO = new BankBookDTO();
-		bankBookDTO.setBookNumber(2L);
+		bankBookDTO.setBookNumber(6L);
 		int result = bankBookDAO.delete(bankBookDTO);
 		
 		assertEquals(1, result);

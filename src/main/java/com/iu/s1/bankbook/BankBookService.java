@@ -17,6 +17,12 @@ public class BankBookService {
 	
 	//메서드는 DAO의 메서드와 거의 동일
 	
+	//delete
+	public int delete(BankBookDTO bankBookDTO)throws Exception{
+		return bankBookDAO.delete(bankBookDTO);
+		
+	}
+	
 	//add
 	public int add(BankBookDTO bankBookDTO)throws Exception{
 		return bankBookDAO.add(bankBookDTO);
