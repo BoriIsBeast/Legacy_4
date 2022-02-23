@@ -1,0 +1,22 @@
+.a1{
+    
+    
+    margin-top: 50px;
+    
+    text-align: center;
+    margin-bottom: 50px;
+}
+.notice_table{
+
+    width: 75%;
+    border: 1px black solid;
+}
+.thread{
+    background-color: black;
+    color: white;
+}
+ 
+.notice_table tr{
+    text-align: center;
+}
+

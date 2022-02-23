@@ -7,7 +7,7 @@
   <typeAliases>
   	
   	<typeAlias type="com.iu.s1.bankbook.BankBookDTO" alias="BankBookDTO"/>
- 
+ 	<typeAlias type="com.iu.s1.member.MemberDTO" alias="MemberDTO"/>
  	
   </typeAliases>
   
