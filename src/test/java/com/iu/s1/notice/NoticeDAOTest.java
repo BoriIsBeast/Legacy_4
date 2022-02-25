@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.iu.s1.MyJunitTest;
+import com.iu.s1.util.Pager;
 
 public class NoticeDAOTest extends MyJunitTest {
 
@@ -21,13 +22,21 @@ public class NoticeDAOTest extends MyJunitTest {
 	} 
 	
 	//list
-	@Test
+	//@Test
 	public void listTest() throws Exception {
-		List<NoticeDTO> ar = noticeDAO.list();
-				assertNotEquals(0, ar.size());
+		Pager pager = new Pager();
+		pager.setPerPage(5L);
+		
+		pager.makeRow();
+		
+		
+		List<NoticeDTO> ar = noticeDAO.list(pager);
+		System.out.println(ar.get(0).getNum());
+		System.out.println(ar.get(4).getNum());
+				assertNotEquals(10, ar.size());
 	}
 	//detail
-	@Test
+	//@Test
 	public void detailTest() throws Exception {
 		NoticeDTO noticeDTO = new NoticeDTO();
 		 noticeDTO.setNum(2);
@@ -37,15 +46,34 @@ public class NoticeDAOTest extends MyJunitTest {
 		assertNotNull(noticeDTO);
 	}
 	//add
-	//@Test
+	@Test
 	public void addTest() throws Exception {
+		
+		for(int i = 0;i<200;i++) {
 		NoticeDTO noticeDTO = new NoticeDTO();
-		noticeDTO.setTitle("t3");
-		noticeDTO.setContents("Contents3");
-		noticeDTO.setWriter("writer3");
-		noticeDTO.setHit(3);
-		int result = noticeDAO.add(noticeDTO);
-		assertEquals(1, result);
+		noticeDTO.setTitle("Title"+i);
+		noticeDTO.setContents("Contents"+i);
+		noticeDTO.setWriter("Writer"+i);
+		
+		noticeDTO.setHit(0);
+		
+		int result= noticeDAO.add(noticeDTO);
+		
+		if(i%10==0) {
+			Thread.sleep(1000);//1초동안 멈추세요
+			}
+		}
+		System.out.println("Insert Finish");	
+		
+		
+		
+		
+		//		noticeDTO.setTitle("t3");
+//		noticeDTO.setContents("Contents3");
+//		noticeDTO.setWriter("writer3");
+//		noticeDTO.setHit(3);
+//		int result = noticeDAO.add(noticeDTO);
+//		assertEquals(1, result);
 		
 	}
 	

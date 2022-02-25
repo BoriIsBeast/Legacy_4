@@ -3,40 +3,81 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-    <!--  별칭줘서 DTO가 짧아진거 원래는 풀패키지 -->
-    
-    <mapper namespace="com.iu.s1.bankbook.BankBookDAO">
-    
-    <!-- id = DAO의 메서드명 -->
-    
-    <!-- update -->
-    <update id="update" parameterType="BankBookDTO">
-    	update bankbook 
-    		set bookName=#{bookName}, bookContents=#{bookContents}
-    		, bookSale=#{bookSale}, bookRate=#{bookRate}
-    	where bookNumber=#{bookNumber}
-    </update>
-    
-    <select id="detail" parameterType="BankBookDTO" resultType="BankBookDTO">
-   		 SELECT * FROM BANKBOOK WHERE BOOKNUMBER = #{bookNumber}
-    </select>
-    
-   
-    <!-- id = DAO의 메서드명 -->
-     <select id="list" resultType="BankBookDTO">
-     SELECT * FROM BANKBOOK
-     </select>
-     <!-- id = DAO의 메서드명 -->
-     <insert id="add" parameterType="BankBookDTO">
-     INSERT INTO BANKBOOK (BOOKNUMBER, BOOKNAME, BOOKCONTENTS, BOOKRATE, BOOKSALE)
-        VALUES (BOOKNUMBER_SEQ.NEXTVAL, #{bookName}, #{bookContents}, #{bookRate}, #{bookSale})
-     </insert>
-     
-     <!-- id = DAO의 메서드명 -->
-     <delete id="delete" parameterType="BankBookDTO">
-     delete bankbook where booknumber = #{bookNumber}
-     
-     </delete>
-     
-     
-    </mapper>
+<!-- 별칭줘서 DTO가 짧아진거 원래는 풀패키지 -->
+
+<mapper namespace="com.iu.s1.bankbook.BankBookDAO">
+
+	<!-- id = DAO의 메서드명 -->
+
+	<!-- update -->
+	<update id="update" parameterType="BankBookDTO">
+		update bankbook
+		set bookName=#{bookName}, bookContents=#{bookContents}
+		, bookSale=#{bookSale}, bookRate=#{bookRate}
+		where bookNumber=#{bookNumber}
+	</update>
+
+	<select id="detail" parameterType="BankBookDTO"
+		resultType="BankBookDTO">
+		SELECT * FROM BANKBOOK WHERE BOOKNUMBER = #{bookNumber}
+	</select>
+<!-- 파라미터는 어디선가 데이터를 받아올게 있을때 = #{} 가 있을때 -->
+	<select id="total" resultType="java.lang.Long" parameterType="Pager">
+		SELECT COUNT(BOOKNUMBER) FROM BANKBOOK
+		WHERE 
+		    BOOKNUMBER>0 
+        	AND 
+        		
+       		<choose> <!-- #{kind}로 쓰는게 아닌 getter의 이름을 바로 쓸것 -->
+        		<when test="kind=='col1'">
+        			BOOKNAME
+        		</when>
+        		<otherwise>
+        			BOOKCONTENTS
+        		</otherwise>
+        	</choose>
+        
+         LIKE '%' || #{search} || '%'
+	</select>
+
+	<!-- id = DAO의 메서드명 -->
+	<select id="list" parameterType="Pager" resultType="BankBookDTO">
+		SELECT * FROM
+    		(SELECT rownum R, B.* FROM<!-- #{} 은 Pager의 getter의 이름 -->
+        		(SELECT * FROM BANKBOOK WHERE 
+        		BOOKNUMBER>0 
+        		AND 
+        		
+        		<choose> <!-- #{kind}로 쓰는게 아닌 getter의 이름을 바로 쓸것 -->
+        			<when test="kind=='col1'">
+        				BOOKNAME
+        			</when>
+        			<otherwise>
+        				BOOKCONTENTS
+        			</otherwise>
+        		</choose>
+        		
+        		 LIKE '%' || #{search} || '%'
+        			ORDER BY BOOKNUMBER DESC
+        		) B
+   			 )
+		WHERE R BETWEEN #{startRow} AND #{lastRow}
+	</select>
+	
+	
+	<!-- id = DAO의 메서드명 -->
+	<insert id="add" parameterType="BankBookDTO">
+		INSERT INTO BANKBOOK (BOOKNUMBER, BOOKNAME, BOOKCONTENTS, BOOKRATE,
+		BOOKSALE)
+		VALUES (BOOKNUMBER_SEQ.NEXTVAL, #{bookName}, #{bookContents}, #{bookRate},
+		#{bookSale})
+	</insert>
+
+	<!-- id = DAO의 메서드명 -->
+	<delete id="delete" parameterType="BankBookDTO">
+		delete bankbook where booknumber = #{bookNumber}
+
+	</delete>
+
+
+</mapper>

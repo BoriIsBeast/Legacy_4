@@ -6,8 +6,17 @@
 	<mapper namespace="com.iu.s1.notice.NoticeDAO">
 	
 	<select id="list" resultType="com.iu.s1.notice.NoticeDTO">
-		SELECT * FROM NOTICE
+		SELECT * FROM
+		(SELECT ROWNUM R, B.* FROM
+		(SELECT * FROM NOTICE WHERE NUM>0 ORDER BY NUM DESC) B)
+		WHERE R BETWEEN #{startRow} AND #{lastRow}
 	</select>
+	
+	<select id="total" resultType="java.lang.Long">
+		SELECT COUNT(num) FROM notice
+	</select>
+	
+	
 	
 	<select id="detail" parameterType="com.iu.s1.notice.NoticeDTO" resultType="com.iu.s1.notice.NoticeDTO" >
 		SELECT * FROM NOTICE WHERE NUM=#{num}
