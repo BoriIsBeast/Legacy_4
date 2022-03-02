@@ -17,7 +17,7 @@ public class MemberDAOTest extends MyJunitTest {
 		assertNotNull(memberDAO);
 			
 		}
-	@Test
+	//@Test
 	public void mypageTest()throws Exception{
 		MemberDTO memberDTO = new MemberDTO();
 		memberDTO.setId("id3asdasd");
