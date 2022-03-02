@@ -27,7 +27,7 @@ public class NoticeDAOTest extends MyJunitTest {
 				assertNotEquals(0, ar.size());
 	}
 	//detail
-	@Test
+	//@Test
 	public void detailTest() throws Exception {
 		NoticeDTO noticeDTO = new NoticeDTO();
 		 noticeDTO.setNum(2);

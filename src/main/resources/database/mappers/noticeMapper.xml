@@ -5,16 +5,61 @@
 	
 	<mapper namespace="com.iu.s1.notice.NoticeDAO">
 	
-	<select id="list" resultType="com.iu.s1.notice.NoticeDTO">
-		SELECT * FROM NOTICE
+	<select id="list" resultType="com.iu.s1.notice.NoticeDTO" parameterType="Pager">
+		SELECT * FROM
+		(SELECT rownum R, B.* FROM 
+		(SELECT * FROM NOTICE WHERE NUM>0 
+		AND
+		
+		<choose> <!-- #{kind}로 쓰는게 아닌 getter의 이름을 바로 쓸것 -->
+        		<when test="kind=='col1'">
+        			TITLE
+        		</when>
+        		<when test="kind=='col2'">
+        			CONTENTS
+        		</when>
+        		<otherwise>
+        			WRITER
+        		</otherwise>
+        	</choose>
+        
+         LIKE '%' || #{search} || '%'
+		ORDER BY NUM DESC) B)
+		WHERE R between #{startRow} and #{lastRow}
 	</select>
 	
+	
+	
+	
+		
+	<!-- 파라미터는 어디선가 데이터를 받아올게 있을때 = #{} 가 있을때 -->
+	<select id="total" resultType="java.lang.Long" parameterType="Pager">
+		SELECT COUNT(NUM) FROM NOTICE
+		WHERE 
+		    NUM>0 
+        	AND 
+        		
+       		<choose> <!-- #{kind}로 쓰는게 아닌 getter의 이름을 바로 쓸것 -->
+        		<when test="kind=='col1'">
+        			TITLE
+        		</when>
+        		<when test="kind=='col2'">
+        			CONTENTS
+        		</when>
+        		<otherwise>
+        			WRITER
+        		</otherwise>
+        	</choose>
+        
+         LIKE '%' || #{search} || '%'
+	</select>	
+		
 	<select id="detail" parameterType="com.iu.s1.notice.NoticeDTO" resultType="com.iu.s1.notice.NoticeDTO" >
 		SELECT * FROM NOTICE WHERE NUM=#{num}
 	</select>
 	
 	<insert id="add" parameterType="com.iu.s1.notice.NoticeDTO">
-		 INSERT INTO NOTICE (NUM, TITLE, WRITER, CONTENTS,REGDATE,HIT)
+		 INSERT INTO NOTICE (NUM, TITLE, CONTENTS, WRITER ,REGDATE,HIT)
     values (num_seq.nextval, #{title}, #{contents}, #{writer}, sysDate, #{hit})
 	</insert>
 	

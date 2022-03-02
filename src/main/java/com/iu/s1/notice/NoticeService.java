@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.iu.s1.util.Pager;
 @Service
 public class NoticeService {
 		@Autowired
@@ -21,8 +23,16 @@ public class NoticeService {
 		
 		
 		//list
-		public List<NoticeDTO>list()throws Exception{
-			List<NoticeDTO> ar = noticeDAO.list();
+		public List<NoticeDTO>list(Pager pager)throws Exception{
+			
+			//DAO에서 호출 전 전처리작업
+			pager.makeRow();
+			
+			Long totalCount = noticeDAO.total(pager);
+			pager.makeNum(totalCount);
+			
+			//호출 후 후처리 작업
+			List<NoticeDTO> ar = noticeDAO.list(pager);
 			
 			return ar;
 		}

@@ -11,6 +11,26 @@
 <body>
 <c:import url="../template/header.jsp"></c:import>
 		<h1>List Page</h1>
+		
+		<!-- 검색창-->
+		<div>
+			<form action="./list" method="get">
+				<fieldset>
+					<select name="kind">
+						<option value="col1">제목</option>
+						<option value="col2">내용</option>
+						<option value="col3">작성자</option>
+					</select>
+					<input type="text" name="search" value="${pager.search}"><!-- 파라미터 -> name-->
+					<button type="submit">검색</button>
+				</fieldset>	
+			</form>
+
+		</div>
+		
+		
+		
+		
 		<table>
 		<tr>
 				<th>글번호</th><th>제목</th><th>내용</th><th>작성자</th><th>작성일자</th><th>조회수</th>
@@ -26,6 +46,23 @@
 		</tr>
 		</c:forEach>
 		</table>
+		
+		<div>
+		<c:if test="${pager.pre}">
+			<a href="./list?page=${pager.startNum-1}">PREVIEW</a>
+		</c:if>
+	
+		<c:forEach begin="${pager.startNum}" end="${pager.lastNum}" var="i">
+			<a href="./list?page=${i}&kind=${pager.kind}&search=${pager.search}">${i}</a>
+		</c:forEach>
+		
+		<c:if test="${pager.next}">
+			<a href="./list?page=${pager.lastNum+1}">NEXT</a>
+		</c:if>
+		
+	</div>
+		
+	
 		
 		<a href="./add">add</a>
 </body>
