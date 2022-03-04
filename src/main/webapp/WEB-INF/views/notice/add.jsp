@@ -9,14 +9,16 @@
 <body>
 	<h1>Add Page</h1>
 	
-	<form action="./add" method="POST">
+	<form action="./add" method="POST" id="frm">
 	
-	Title <input type="text" name="title">
+	Title <input type="text" name="title" id="title">
+	Writer <input type="text" name="writer" id="writer"> 
 	Contents <textarea name="contents" rows="10" cols=""></textarea>
-	Writer <input type="text" name="writer"> 
-	Hit <input type="text" name="hit">
 	
-	<input type="submit" value="ADD">
+	
+	<input type="button" value="ADD" id="btn">
 	</form>
+
+	<script src="../resources/js/add.js"></script>
 </body>
 </html>
