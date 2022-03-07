@@ -46,7 +46,7 @@ public class NoticeDAOTest extends MyJunitTest {
 		assertNotNull(noticeDTO);
 	}
 	//add
-	@Test
+	//@Test
 	public void addTest() throws Exception {
 		
 		for(int i = 0;i<200;i++) {
