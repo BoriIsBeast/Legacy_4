@@ -7,22 +7,34 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <c:import url="../template/header_css.jsp"></c:import>
+<link href="../resources/css/table.css" rel="styleSheet" /> <!--  혼자열고 혼자 닫을땐 끝에 / 넣어두면 됨  -->
+<link href="../resources/css/list.css" rel="styleSheet" />
 </head>
 <body>
 <c:import url="../template/header.jsp"></c:import>
-		<h1>List Page</h1>
+		<div class="table-container">
+		<h1>${board} List Page</h1>
+		
 		<table>
 		<tr>
 				<th>글번호</th><th>제목</th><th>내용</th><th>작성자</th><th>작성일자</th><th>조회수</th>
 		</tr>
-		<c:forEach items="${list}" var="notice">
+		<c:forEach items="${list}" var="dto">
 		<tr>
-		<td>${notice.num}</td>
-		<td><a href="./detail?num=${notice.num}">${notice.title}</a></td>
-		<td>${notice.contents}</td>
-		<td>${notice.writer}</td>
-		<td>${notice.regDate}</td>
-		<td>${notice.hit}</td>
+		<td>${dto.num}</td>
+		
+		<td><a href="./detail?num=${dto.num}">
+		<c:catch>
+		<c:forEach begin="1" end="${dto.depth}">--</c:forEach>
+		</c:catch>
+		
+		${dto.title}
+		</a>
+		</td>
+		<td>${dto.contents}</td>
+		<td>${dto.writer}</td>
+		<td>${dto.regDate}</td>
+		<td>${dto.hit}</td>
 		</tr>
 		</c:forEach>
 		</table>
@@ -42,5 +54,7 @@
 		</div>
 		
 		<a href="./add">add</a>
+		
+		</div>
 </body>
 </html>

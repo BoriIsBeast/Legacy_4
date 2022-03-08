@@ -3,12 +3,24 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
-	<mapper namespace="com.iu.s1.board.notice.NoticeDAO">
+	<mapper namespace="com.iu.s1.board.qna.QnaDAO">
 	
-	<select id="list" parameterType="Pager" resultType="NoticeDTO">
+	<insert id="reply" parameterType="QnaDTO">
+		 INSERT INTO QNA (NUM, TITLE, WRITER, CONTENTS,REGDATE,HIT, ref, step, depth)
+    values (QNANUM_SEQ.NEXTVAL, #{title}, #{contents}, #{writer}, sysDate, 0, #{ref}, #{step}, #{depth})
+	
+	</insert>
+	
+	
+	<update id="stepUpdate" parameterType="QnaDTO">
+		update qna set step=step+1
+		where ref=#{ref} and step>#{step}
+	</update>
+	
+	<select id="list" parameterType="Pager" resultType="QnaDTO">
 		SELECT * FROM
 		    (SELECT rownum R, B.* FROM 
-		        (SELECT * FROM NOTICE WHERE 
+		        (SELECT * FROM QNA WHERE 
 		        	NUM>0 
 		        	and 
 		        	
@@ -26,7 +38,7 @@
 		        	
 		        	 
 		        	LIKE '%'||#{search}||'%'
-		            ORDER BY NUM DESC
+		            ORDER BY REF DESC, STEP ASC
 		         ) B
 		     )
 		WHERE R between #{startRow} and #{lastRow}
@@ -36,26 +48,26 @@
 	
 	
 	
-	<select id="detail" parameterType="NoticeDTO" resultType="NoticeDTO" >
-		SELECT * FROM NOTICE WHERE NUM=#{num}
+	<select id="detail" parameterType="QnaDTO" resultType="QnaDTO" >
+		SELECT * FROM QNA WHERE NUM=#{num}
 	</select>
 	
-	<insert id="add" parameterType="NoticeDTO">
-		 INSERT INTO NOTICE (NUM, TITLE, WRITER, CONTENTS,REGDATE,HIT)
-    values (num_seq.nextval, #{title}, #{contents}, #{writer}, sysDate, #{hit})
+	<insert id="add" parameterType="QnaDTO">
+		 INSERT INTO QNA (NUM, TITLE, WRITER, CONTENTS,REGDATE,HIT, ref, step, depth)
+    values (QNANUM_SEQ.NEXTVAL, #{title}, #{contents}, #{writer}, sysDate, 0, QNANUM_SEQ.currval, 0, 0)
 	</insert>
 	
-	<delete id="delete" parameterType="NoticeDTO">
-			delete notice where num = #{num}
+	<delete id="delete" parameterType="QnaDTO">
+			delete QNA where num = #{num}
 			</delete>
 			
 		<select id="total" resultType="java.lang.Long" parameterType="Pager">
- 		SELECT COUNT(NUM) FROM NOTICE
+ 		SELECT COUNT(NUM) FROM QNA
  		WHERE
  			NUM>0 
 		    and 
 		       	
-		     <choose> 
+		     <choose>
 		        		<when test="kind=='col1'">
 		        			TITLE
 		        		</when>
@@ -69,8 +81,8 @@
         	LIKE '%'||#{search}||'%' 
  	</select>	
  	
- 	<update id="update" parameterType="NoticeDTO">
- 		update notice set title=#{title}, contents=#{contents} where num=#{num}
+ 	<update id="update" parameterType="QnaDTO">
+ 		update QNA set title=#{title}, contents=#{contents} where num=#{num}
  	</update>
  	
 	</mapper>

@@ -1,14 +1,16 @@
-package com.iu.s1.notice;
+package com.iu.s1.board;
 
-import java.util.Date;
+import java.sql.Date;
 
-public class NoticeDTO {
+public class BoardDTO {
+	
 	private Integer num;
 	private String title;
 	private String contents;
 	private String writer;
 	private Date regDate;
 	private Integer hit;
+	
 	public Integer getNum() {
 		return num;
 	}
@@ -45,13 +47,6 @@ public class NoticeDTO {
 	public void setHit(Integer hit) {
 		this.hit = hit;
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }
