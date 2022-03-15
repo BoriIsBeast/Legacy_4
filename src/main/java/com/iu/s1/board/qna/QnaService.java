@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.iu.s1.board.BoardDTO;
 import com.iu.s1.board.BoardFileDTO;
 import com.iu.s1.board.BoardService;
+import com.iu.s1.board.notice.NoticeDAO;
 import com.iu.s1.util.FileManager;
 import com.iu.s1.util.Pager;
 @Service
@@ -76,7 +77,19 @@ public class QnaService implements BoardService {
 	@Override
 	public int delete(BoardDTO boardDTO) throws Exception {
 		// TODO Auto-generated method stub
-		return qnaDAO.delete(boardDTO);
+		List<QnaFileDTO> ar = qnaDAO.listFile(boardDTO);
+		
+		int result = qnaDAO.delete(boardDTO);
+		
+		if(result>0) {
+			for(QnaFileDTO dto: ar) {
+				boolean check = fileManager.remove("resources/upload/qna/", dto.getFileName());
+				
+			}
+			
+		}
+		
+		return result;
 	}
 	
 	public int reply(QnaDTO qnaDTO)throws Exception{
