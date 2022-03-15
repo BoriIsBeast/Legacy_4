@@ -15,6 +15,13 @@
 		<h3>num : ${dto.num} </h3>
 		<h3>title : ${dto.title}</h3>
 		<h3>contents : ${dto.contents}</h3>
+		<div>
+			<c:forEach items="${dto.fileDTOs}" var="f">
+				
+				<a href="./fileDown?fileNum=${f.fileNum}">${f.oriName}</a>
+				
+			</c:forEach>
+		</div>
 
 		<a href="./list">go list</a>
 		

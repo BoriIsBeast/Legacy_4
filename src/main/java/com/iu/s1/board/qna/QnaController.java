@@ -8,10 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.iu.s1.board.BoardDTO;
+import com.iu.s1.board.BoardFileDTO;
 import com.iu.s1.board.notice.NoticeDTO;
+import com.iu.s1.board.notice.NoticeFileDTO;
 import com.iu.s1.util.Pager;
 
 @Controller
@@ -25,6 +28,21 @@ public class QnaController {
 	public String board() {
 		return "qna";
 	}
+	
+	//filedown
+		@RequestMapping(value = "fileDown", method = RequestMethod.GET)
+		public ModelAndView fileDown(QnaFileDTO qnaFileDTO)throws Exception{
+			ModelAndView mv = new ModelAndView();
+			mv.setViewName("fileDown");
+			
+			qnaFileDTO=qnaService.detailFile(qnaFileDTO);
+			
+			mv.addObject("file", qnaFileDTO);
+			
+			return mv;
+			
+		}
+	
 	@RequestMapping(value = "reply", method = RequestMethod.POST)
 	public ModelAndView reply(QnaDTO qnaDTO) throws Exception {
 		ModelAndView mv = new ModelAndView();
@@ -63,9 +81,9 @@ public class QnaController {
 	
 	//DB에 insert
 		@RequestMapping (value = "add",method = RequestMethod.POST)
-		public ModelAndView add(QnaDTO qnaDTO)throws Exception{
+		public ModelAndView add(QnaDTO qnaDTO, MultipartFile [] files)throws Exception{
 			ModelAndView mv = new ModelAndView();
-			int result = qnaService.add(qnaDTO);
+			int result = qnaService.add(qnaDTO, files); // null 수정해야됨 !!!!!!!!
 			mv.setViewName("redirect:./list");
 			return mv;
 		}

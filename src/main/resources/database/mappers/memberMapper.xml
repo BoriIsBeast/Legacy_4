@@ -5,13 +5,41 @@
 
     
     <mapper namespace="com.iu.s1.member.MemberDAO">
+    
+   	<select id="detailFile" parameterType="MemberFileDTO" resultType="MemberFileDTO">
+   		SELECT * FROM MEMBERFILE
+   		WHERE FILENUM = #{fileNum}
+   	</select>
+    	
+    	<insert id="addFile" parameterType="MemberFileDTO">
+    		INSERT INTO MEMBERFILE (FILENUM, ID, FILENAME, ORINAME)
+    		VALUES (FILE_SEQ.NEXTVAL, #{id}, #{fileName}, #{oriName})
+    	</insert>
+    	
+    	
     	
     	<!-- mypage -->
-    	<select id="mypage" parameterType="MemberDTO" resultType="MemberDTO">
-    	SELECT ID, NAME, PHONE, EMAIL FROM MEMBER
-		WHERE ID=#{id}
-    	
+    	<select id="mypage" parameterType="MemberDTO" resultMap="mypageResult">
+    		SELECT ID, M.NAME, M.EMAIL, M.PHONE, MF.FILENUM, MF.FILENAME, MF.ORINAME
+    		FROM 
+    			MEMBER M 
+    				LEFT JOIN
+    			MEMBERFILE MF
+    			USING(ID)
+    		WHERE ID = #{id}
     	</select>
+    	
+    	<resultMap type="MemberDTO" id="mypageResult">
+    		<id column="id" property="id"/> <!-- PK -->
+    		<result column="name" property="name"/><!-- PK를 제외한 나머지 -->
+    		<result column="email" property="email"/>
+    		<result column="phone" property="phone"/>
+    		<association property="memberFileDTO" javaType="MemberFileDTO">  <!-- 1:1 일때는 (멤버와 파일1:1) 1:N일때는 collection  --> <!-- property는 memberDTO의 멤버변수 명 적는것 --> <!-- javaType은 풀패키지로, 여기선 mybatis 등록해놔서 약어 -->
+    			<id column="fileNum" property="fileNum"/>  <!-- property는 memberFileDTO의 멤버변수 명 적는것 -->
+    			<result column="fileName" property="fileName"/>
+    			<result column="oriName" property="oriName"/>
+    		</association>
+    	</resultMap>
     	
     	
     	<!-- select -->

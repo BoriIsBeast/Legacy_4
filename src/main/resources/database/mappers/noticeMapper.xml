@@ -5,6 +5,44 @@
 	
 	<mapper namespace="com.iu.s1.board.notice.NoticeDAO">
 	
+	<select id="listFile" parameterType="BoardDTO" resultType="NoticeFileDTO">
+		SELECT * FROM NOTICEFILE
+		WHERE NUM = #{num}
+	</select>
+	
+	<select id="detailFile" parameterType="NoticeFileDTO" resultType="NoticeFileDTO">
+   		SELECT * FROM  NOTICEFILE
+   		WHERE FILENUM = #{fileNum}
+   	</select>
+	
+	
+	
+	
+	
+	<insert id="addFile" parameterType="BoardFileDTO">
+		
+		INSERT INTO NOTICEFILE (fileNUM, NUM, FILENAME,ORINAME)
+		values (FILE_SEQ.NEXTVAL, #{num}, #{fileName}, #{oriName})
+	</insert>
+	
+	
+	
+	
+	
+	<select id="seqNum" resultType="java.lang.Long">
+	<!-- select max(num) from notice --> 
+	SELECT NOTICE_SEQ.NEXTVAL FROM DUAL
+	</select>
+	
+	<insert id="add" parameterType="NoticeDTO">
+		<selectKey keyProperty="num" order="BEFORE" resultType="java.lang.Long">
+			SELECT NOTICE_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		 INSERT INTO NOTICE (NUM, TITLE, CONTENTS, WRITER,REGDATE,HIT)
+    values (#{num}, #{title}, #{contents}, #{writer}, sysDate, 0)
+	</insert>
+	
+	
 	<select id="list" parameterType="Pager" resultType="NoticeDTO">
 		SELECT * FROM
 		    (SELECT rownum R, B.* FROM 
@@ -36,14 +74,30 @@
 	
 	
 	
-	<select id="detail" parameterType="NoticeDTO" resultType="NoticeDTO" >
-		SELECT * FROM NOTICE WHERE NUM=#{num}
+	<select id="detail" parameterType="NoticeDTO" resultType="NoticeDTO" resultMap="detailResult">
+		SELECT N.*, NF.*
+    	FROM	 NOTICE N
+    		LEFT OUTER JOIN
+    		NOTICEFILE NF
+    		ON N.NUM=NF.NUM
+    	WHERE N.NUM= #{num}
 	</select>
 	
-	<insert id="add" parameterType="NoticeDTO">
-		 INSERT INTO NOTICE (NUM, TITLE, WRITER, CONTENTS,REGDATE,HIT)
-    values (num_seq.nextval, #{title}, #{contents}, #{writer}, sysDate, #{hit})
-	</insert>
+	<resultMap type="NoticeDTO" id="detailResult">
+		<id column="num" property="num"/>
+		<result column="title" property="title"/>
+		<result column="contents" property="contents"/>
+		<result column="writer" property="writer"/>
+		<result column="regDate" property="regDate"/>
+		<result column="hit" property="hit"/>
+		<collection property="fileDTOs" javaType="List" ofType="NoticeFileDTO">
+			<id column="fileNum" property="fileNum"/>
+			<result column="fileName" property="fileName"/>
+			<result column="oriName" property="oriName"/>
+		</collection>
+	
+	</resultMap>
+	
 	
 	<delete id="delete" parameterType="NoticeDTO">
 			delete notice where num = #{num}

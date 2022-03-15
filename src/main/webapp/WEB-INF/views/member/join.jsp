@@ -9,7 +9,7 @@
 <body>
 	<h1>Member Join Page</h1>
 	<div>
-	<form action="./join" method="post" id="frm">
+	<form action="./join" method="post" id="frm" enctype="multipart/form-data">
 		
 		<fieldset>
 			<legend>ID</legend>
@@ -45,12 +45,18 @@
 		</fieldset>
 		
 		<fieldset>
-			<button type="button" id="btn" >Join</button>
+			<legend>Photo</legend>
+			<input type="file" name="photo" id="photo">
+		</fieldset>
+		
+		<fieldset>
+			<!-- 최종완성시 사용하세요  <button type="button" id="btn" >Join</button> -->
+			<button type="submit" id="btn" >Join</button>
 		</fieldset>
 	
 	
 	</form>
 	</div>
-	<script src="../resources/js/join2.js"></script>
+	<!-- <script type="text/javascript" src="../resources/js/join2.js"></script> -->
 </body>
 </html>

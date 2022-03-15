@@ -9,14 +9,22 @@
 <body>
 	<h1>${board} Page</h1>
 	
-	<form action="./add" method="POST" id="frm">
+	<form action="./add" method="POST" id="frm" enctype="multipart/form-data">
 	
 	Title <input type="text" name="title">
 	Writer <input type="text" name="writer"> 
 	Contents <textarea name="contents" rows="10" cols=""></textarea>
 	
 	
-	<input type="button" value="ADD" id="btn">
+	<div>
+		<input type="file" name="files">
+		<input type="file" name="files">
+		<input type="file" name="files">
+	</div>
+	
+	  <button type="submit">ADD</button>
+	
+	<!--  <input type="button" value="ADD" id="btn"> -->
 	</form>
 
 	<script src="../resources/js/add.js"></script>

@@ -36,7 +36,7 @@ pw2.addEventListener('blur', function(){
 //---- 검증이 끝난 pw를 수정했을 경우 
 pw.addEventListener('change', function(){
     pwCheck =true;
-    pw2.value=''
+    pw2.value='';
     pwResult.value='';
     pw.focus();
 });
