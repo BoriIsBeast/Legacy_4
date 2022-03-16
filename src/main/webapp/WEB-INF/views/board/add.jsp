@@ -12,7 +12,7 @@
 	<form action="./add" method="POST" id="frm" enctype="multipart/form-data">
 	
 	Title <input type="text" name="title">
-	Writer <input type="text" name="writer"> 
+	Writer <input type="text" name="writer" value="${member.id}"  readonly="readonly"> 
 	Contents <textarea name="contents" rows="10" cols=""></textarea>
 	
 	

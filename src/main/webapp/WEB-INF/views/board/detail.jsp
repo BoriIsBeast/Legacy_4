@@ -24,9 +24,10 @@
 		</div>
 
 		<a href="./list">go list</a>
-		
+		<c:if test="${member.id eq dto.writer}">
 		<a href="./delete?num=${dto.num}">Delete</a>
 		<a href="./update?num=${dto.num}">Update</a>
+		</c:if>
 		<c:if test="${board ne 'notice'}">
 		<a href="./reply?num=${dto.num}">Reply</a>
 		</c:if>

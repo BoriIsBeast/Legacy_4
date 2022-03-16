@@ -53,8 +53,9 @@
 			</c:if>
 		</div>
 		
+		<c:if test="${not empty member}">
 		<a href="./add">add</a>
-		
+		</c:if>
 		</div>
 </body>
 </html>
