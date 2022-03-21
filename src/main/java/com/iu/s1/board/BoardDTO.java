@@ -8,7 +8,7 @@ public class BoardDTO {
 	private String title;
 	private String contents;
 	private String writer;
-	private Date regDate;
+	private Date regDate; // string으로 바꿔도 됨 //바꾸면 년-월-일 or 년/월/일
 	private Integer hit;
 	
 	

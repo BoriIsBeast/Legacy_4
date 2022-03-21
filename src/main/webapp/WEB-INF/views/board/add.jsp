@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+
 <body>
 	<h1>${board} Page</h1>
 	
@@ -16,10 +17,18 @@
 	Contents <textarea name="contents" rows="10" cols=""></textarea>
 	
 	
+	<div id="fileResult">
+		
+		
+	<!--	<div>
+		<input type="file" name="files"><button type="button">DEL</button>
+		</div>
+		<input type="file" name="files">
+		<input type="file" name="files"> -->
+	</div>
 	<div>
-		<input type="file" name="files">
-		<input type="file" name="files">
-		<input type="file" name="files">
+		<button type="button" id="fileAdd">FileAdd</button>
+		<button class="del" type="button">sample DEL</button>
 	</div>
 	
 	  <button type="submit">ADD</button>
@@ -27,6 +36,7 @@
 	<!--  <input type="button" value="ADD" id="btn"> -->
 	</form>
 
-	<script src="../resources/js/add.js"></script>
+	<!-- <script src="../resources/js/add.js"></script> -->
+	<script src="../resources/js/file.js"></script>
 </body>
 </html>
